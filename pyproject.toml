@@ -1,0 +1,8 @@
+[tool.black]
+line-length = 80
+
+[tool.isort]
+include_trailing_comma = true
+line_length = 80
+multi_line_output = 3
+known_third_party =["matplotlib", "networkx", "numpy", "pandas", "tools", "ts2vg", "vg_class"]
