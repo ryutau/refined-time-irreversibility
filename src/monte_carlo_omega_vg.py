@@ -29,7 +29,7 @@ def main(omega):
     ]
     n_iter = 10
     max_power_idx = 17  # max size of the time series will be 2**max_power_idx
-    for i, ts_kind in enumerate(ts_kind_list, 1):
+    for ts_kind in ts_kind_list:
         whole_graph_list = [
             EfficientVisibilityGraph(
                 generate_ts(kind=ts_kind, size=2 ** max_power_idx, seed=i),
@@ -49,8 +49,9 @@ def main(omega):
         )
         result_df.to_csv(
             f"{save_dir(script_name)}"
-            f"/monte_carlo_result_{ts_kind}_omega{omega}.csv"
+            f"/original_vg-{omega}_mc_result_{ts_kind}.csv"
         )
+        print(f"{ts_kind} has been finished.")
     elapsed_time = time.time() - start
     print(f"elapsed_time:{elapsed_time}[sec]")
 
@@ -60,6 +61,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--omega",
         type=int,
+        default=None,
     )
     args = parser.parse_args()
     omega = args.omega
