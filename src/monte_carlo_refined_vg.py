@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import time
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,6 +16,7 @@ script_name = re.sub(r"\.py$", "", os.path.basename(__file__))
 
 
 def main(omega):
+    start = time.time()
     ts_kind_list = [
         "White noise",
         "Chaotic logistic map",
@@ -46,9 +48,12 @@ def main(omega):
             }
         )
         result_df.to_csv(
-            f"{save_dir(script_name)}/"
-            f"monte_carlo_result_{ts_kind}_omega{omega}.csv"
+            f"{save_dir(script_name)}"
+            f"/deg-vec_vg-{omega}_mc_result_{ts_kind}.csv"
         )
+        print(f"{ts_kind} has been finished")
+    elapsed_time = time.time() - start
+    print(f"elapsed_time: {elapsed_time}[sec]")
 
 
 if __name__ == "__main__":
