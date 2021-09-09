@@ -15,14 +15,13 @@ class EfficientVisibilityGraph(BaseGraph):
         node_dic = [(node[0], {"value": node[1]}) for node in self.ts]
         G.add_nodes_from(node_dic)
         if self.window_width is None:
-            edge_list = [
-                sorted([d + 1 for d in edge]) for edge in vg.edgelist()
-            ]
+            edge_list = [sorted([d + 1 for d in edge]) for edge in vg.edgelist()]
         else:
             edge_list = [
                 sorted((edge[0] + 1, edge[1] + 1))
                 for edge in vg.edgelist()
                 if abs(edge[0] - edge[1]) <= self.window_width
             ]
+        del vg
         G.add_edges_from(edge_list)
         return G

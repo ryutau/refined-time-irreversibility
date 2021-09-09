@@ -20,8 +20,7 @@ def KLD(p_cnt, q_cnt, delta=1e-10):
     q_dist = defaultdict(lambda: 0)
     q_dist.update(q_cnt)
     div_list = [
-        p_proba * np.log((p_proba + delta) / (q_dist[k] + delta))
-        for k, p_proba in p_dist.items()
+        p_proba * np.log((p_proba + delta) / (q_dist[k] + delta)) for k, p_proba in p_dist.items()
     ]
     kld = sum(div_list)
     return kld
@@ -56,20 +55,16 @@ def generate_ts(kind, size, seed=42):
                 memory = ts[i - tau]
                 ts = np.append(ts, memory)
     elif kind == "Unbiased multiplicative random walk":
-        ts = np.cumprod(
-            np.append([1], np.exp(np.random.uniform(-0.5, 0.5, size - 1)))
-        )
+        ts = np.cumprod(np.append([1], np.exp(np.random.uniform(-0.5, 0.5, size - 1))))
     elif kind == "Multiplicative random walk with negative drift":
         ts = np.cumprod(np.append([1], np.random.uniform(0.9, 1.1, size - 1)))
-    elif (
-        kind == "Multiplicative random walk with volatility clustering (GARCH)"
-    ):
-        # gamma = 0.1
-        gamma = 0.045
-        # beta = 0.6
-        beta = 0.87
-        # alpha = 0.3
-        alpha = 0.11
+    elif kind == "Multiplicative random walk with volatility clustering (GARCH)":
+        gamma = 0.1
+        # gamma = 0.045
+        beta = 0.6
+        # beta = 0.87
+        alpha = 0.3
+        # alpha = 0.11
         y = [0 for _ in range(size)]
         h = [1 for _ in range(size)]
         for t in range(1, size):
@@ -89,3 +84,7 @@ def generate_ts(kind, size, seed=42):
         )
         raise ValueError(error_message)
     return ts
+
+
+def nested_dict():
+    return defaultdict(nested_dict)
