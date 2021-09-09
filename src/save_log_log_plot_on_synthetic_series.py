@@ -6,29 +6,30 @@ from tools.save import save_dir
 plt.rcParams["font.size"] = 15
 plt.rcParams["axes.formatter.use_mathtext"] = True
 
-ts_kind_list = [
-    "White noise",
-    "Chaotic logistic map",
-    "Unbiased additive random walk",
-    "Additive random walk with positive drift",
-    "Unbiased additive random walk with memory",
-    "Unbiased multiplicative random walk",
-    "Multiplicative random walk with negative drift",
-    "Multiplicative random walk with volatility clustering (GARCH)",
-]
 
-name_list = [
-    "White noise",
-    "Chaotic logistic map",
-    "Unbiased ARW",
-    "ARW nwith positive drift",
-    "Unbiased ARW with memory",
-    "Unbiased MRW",
-    "MRW with negative drift",
-    "GARCH",
-]
-
-name_mapper = {kind: name for kind, name in zip(ts_kind_list, name_list)}
+def generate_name_mapper():
+    ts_kind_list = [
+        "White noise",
+        "Chaotic logistic map",
+        "Unbiased additive random walk",
+        "Additive random walk with positive drift",
+        "Unbiased additive random walk with memory",
+        "Unbiased multiplicative random walk",
+        "Multiplicative random walk with negative drift",
+        "Multiplicative random walk with volatility clustering (GARCH)",
+    ]
+    name_list = [
+        "(A) White noise",
+        "(B) Chaotic logistic map",
+        "(A) Unbiased ARW",
+        "(B) ARW with positive drift",
+        "(C) Unbiased ARW with memory",
+        "(A) Unbiased MRW",
+        "(B) MRW with negative drift",
+        "(C) GARCH",
+    ]
+    name_mapper = {kind: name for kind, name in zip(ts_kind_list, name_list)}
+    return name_mapper
 
 
 def read_results(ts_kind):
