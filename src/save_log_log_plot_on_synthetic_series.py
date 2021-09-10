@@ -2,7 +2,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
-
 from tools.save import save_dir
 
 matplotlib.rcParams.update({"figure.autolayout": True})
@@ -46,15 +45,15 @@ def generate_ts_name_dict(tgt_category):
 
 def read_results(ts_kind):
     vg_data = pd.read_csv(
-        f"../output/monte_carlo_omega_vg/original_vg-None_mc_result_{ts_kind}.csv",
+        f"../output/monte_carlo_vg/vg-None_mc_result_{ts_kind}.csv",
         index_col=0,
     )
     lvg_data = pd.read_csv(
-        f"../output/monte_carlo_omega_vg/original_vg-100_mc_result_{ts_kind}.csv",
+        f"../output/monte_carlo_vg/vg-100_mc_result_{ts_kind}.csv",
         index_col=0,
     )
     dvg_data = pd.read_csv(
-        f"../output/monte_carlo_refined_vg/deg-vec_vg-2_mc_result_{ts_kind}.csv",
+        f"../output/monte_carlo_dv-vg/dvg-2_mc_result_{ts_kind}.csv",
         index_col=0,
     )
     return [vg_data, lvg_data, dvg_data]
@@ -64,17 +63,17 @@ def vis_tir_loglog_plot(ts_category):
     ts_name_dict = generate_ts_name_dict(ts_category)
     n = len(ts_name_dict)
     results_dict = {ts_kind: read_results(ts_kind) for ts_kind in ts_name_dict.keys()}
-    label_list = ["VG", "LVG", "DVG"]
+    label_list = ["VG", "LVG", "DV-VG"]
     color_list = ["#7249F5", "#3CA832", "#FF690D"]
     ls_list = [":", "-.", "--"]
-    figure = plt.figure(figsize=(6.2 * n, 5))
+    figure = plt.figure(figsize=(5 * n, 5))
     gs_master = GridSpec(nrows=1, ncols=n)
     plot_space = GridSpecFromSubplotSpec(
-        nrows=1, ncols=n, subplot_spec=gs_master[0, :], wspace=0.15
+        nrows=1, ncols=n, subplot_spec=gs_master[0, :], wspace=0.17
     )
     for i, (ts_kind, result) in enumerate(results_dict.items()):
         figure.add_subplot(plot_space[:, i])
-        plt.title(ts_name_dict[ts_kind], fontsize=22, pad=10)
+        plt.title(ts_name_dict[ts_kind], fontsize=18, pad=10)
         plt.ylim(1e-6, 20)
         plt.xticks()
         plt.yscale("log")
@@ -97,7 +96,7 @@ def vis_tir_loglog_plot(ts_category):
             factor *= 1.06
         if i == 0:
             plt.ylabel("KLD", fontsize=15)
-            plt.legend(loc="lower left", fontsize=15)
+            plt.legend(loc="lower left")
     plt.savefig(f"{save_dir('figures_for_paper')}/log-log_plot_{ts_category}.png")
     plt.close()
 

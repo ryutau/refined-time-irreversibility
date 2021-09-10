@@ -4,14 +4,10 @@ import re
 import time
 from collections import defaultdict
 
-import matplotlib.pyplot as plt
 import pandas as pd
 from tools.convenient_functions import generate_ts
 from tools.save import save_dir
 from vg_class import BasicSubGraph, EfficientVisibilityGraph
-
-plt.rcParams["font.size"] = 15
-plt.rcParams["axes.formatter.use_mathtext"] = True
 
 script_name = re.sub(r"\.py$", "", os.path.basename(__file__))
 
@@ -19,14 +15,14 @@ script_name = re.sub(r"\.py$", "", os.path.basename(__file__))
 def main(omega):
     start = time.time()
     ts_kind_list = [
-        # "White noise",
-        # "Chaotic logistic map",
-        # "Unbiased additive random walk",
-        # "Additive random walk with positive drift",
-        # "Unbiased additive random walk with memory",
-        # "Unbiased multiplicative random walk",
+        "White noise",
+        "Chaotic logistic map",
+        "Unbiased additive random walk",
+        "Additive random walk with positive drift",
+        "Unbiased additive random walk with memory",
+        "Unbiased multiplicative random walk",
         "Multiplicative random walk with negative drift",
-        # "Multiplicative random walk with volatility clustering (GARCH)",
+        "Multiplicative random walk with volatility clustering (GARCH)",
     ]
     n_iter = 10
     max_power_idx = 16  # max size of the time series will be 2**max_power_idx
@@ -42,7 +38,7 @@ def main(omega):
             for N in [2 ** j for j in range(5, max_power_idx + 1)]:
                 result_dict[N].append(BasicSubGraph(vg, N).compute_irreversibility())
         result_df = pd.DataFrame(result_dict)
-        result_df.to_csv(f"{save_dir(script_name)}" f"/original_vg-{omega}_mc_result_{ts_kind}.csv")
+        result_df.to_csv(f"{save_dir(script_name)}/vg-{omega}_mc_result_{ts_kind}.csv")
         print(f"{ts_kind} has been finished.")
     elapsed_time = time.time() - start
     print(f"elapsed_time:{elapsed_time}[sec]")
