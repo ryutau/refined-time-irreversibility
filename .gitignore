@@ -130,3 +130,6 @@ dmypy.json
 
 # output files
 /output
+
+# data files
+/data
