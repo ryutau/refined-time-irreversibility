@@ -66,10 +66,10 @@ def vis_tir_loglog_plot(ts_category):
     label_list = ["VG", "LVG", "DV-VG"]
     color_list = ["#7249F5", "#3CA832", "#FF690D"]
     ls_list = [":", "-.", "--"]
-    figure = plt.figure(figsize=(5 * n, 4.2))
+    figure = plt.figure(figsize=(5 * n, 5))
     gs_master = GridSpec(nrows=1, ncols=n)
     plot_space = GridSpecFromSubplotSpec(
-        nrows=1, ncols=n, subplot_spec=gs_master[0, :], wspace=0.15
+        nrows=1, ncols=n, subplot_spec=gs_master[0, :], wspace=0.17
     )
     for i, (ts_kind, result) in enumerate(results_dict.items()):
         figure.add_subplot(plot_space[:, i])
