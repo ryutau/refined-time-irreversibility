@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
+
 from tools.save import save_dir
 
 matplotlib.rcParams.update({"figure.autolayout": True})
@@ -64,7 +65,8 @@ def vis_tir_loglog_plot(ts_category):
     n = len(ts_name_dict)
     results_dict = {ts_kind: read_results(ts_kind) for ts_kind in ts_name_dict.keys()}
     label_list = ["VG", "LVG", "DV-VG"]
-    color_list = ["#7249F5", "#3CA832", "#FF690D"]
+    # color_list = ["#7249F5", "#3CA832", "#FF690D"]
+    color_list = ["b", "cyan", "r"]
     ls_list = [":", "-.", "--"]
     figure = plt.figure(figsize=(5 * n, 5))
     gs_master = GridSpec(nrows=1, ncols=n)
