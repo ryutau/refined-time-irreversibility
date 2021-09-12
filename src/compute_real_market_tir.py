@@ -2,6 +2,7 @@ import os
 import re
 
 import pandas as pd
+
 from tools.save import save_dir
 from vg_class import RefinedVG
 
@@ -12,11 +13,11 @@ def main():
     market_list = ["N225", "BSESN", "HSI", "FCHI", "DJI", "GDAXI"]
     period_length = 1000
     for market in market_list:
-        result = get_deg_vec_consecutive_tir(market, period_length)
+        result = get_deg_vec_tir_seq(market, period_length)
         result.to_csv(f"{save_dir(script_name)}/{market}_dv-vg_tir.csv")
 
 
-def get_deg_vec_consecutive_tir(market, period_length):
+def get_deg_vec_tir_seq(market, period_length):
     market_data = (
         pd.read_csv(
             f"../data/daily_stock_prices/{market}.csv",
@@ -32,7 +33,7 @@ def get_deg_vec_consecutive_tir(market, period_length):
     )
     tir_seq = pd.Series(
         {
-            market_data.loc[i - 2 + period_length, "Date"]: rvg.compute_irreversibility(
+            market_data.index[i - 2 + period_length]: rvg.compute_irreversibility(
                 start=i, end=i + period_length
             )
             for i in range(1, rvg.N - period_length + 2)
